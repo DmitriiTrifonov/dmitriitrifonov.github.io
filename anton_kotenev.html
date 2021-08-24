@@ -6,18 +6,21 @@
     <body>
         <input type="text" id="number" value="200">
         <br>
+        <input type="text" id="name" value="Антон Котенев">
+        <br>
         <button onclick="process()">Антон Котенев (Антон Котенев)</button>
 
         <p id="anton"></p>
 
         <script>
             function process() {
-                var n = document.getElementById("number").value;
+                let n = document.getElementById("number").value;
+                let name = document.getElementById("name").value;
                 function antonKotenev(n) {
                     if (n == 0) {
-		                return "(Aнтон Котенев)";
+		                return `(${name})`;
 	                }
-	                return "(" + "Aнтон Котенев " + antonKotenev(n - 1) + ")";
+	                return `(${name} ${antonKotenev(n - 1)})`;
                 }
                 out = antonKotenev(n);
                 document.getElementById("anton").innerHTML = out.substring(1, out.length-1);
