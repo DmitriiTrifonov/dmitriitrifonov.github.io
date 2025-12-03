@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
+
+        canvas {
+            touch-action: none;
+            -ms-touch-action: none;
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="ebiten-canvas"></canvas>
+
+<script src="wasm_exec.js"></script>
+
+<script>
+    document.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener("touchmove", function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener("touchend", function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    const go = new Go();
+
+    WebAssembly.instantiateStreaming(fetch("box-dodger.wasm"), go.importObject)
+        .then(result => {
+            go.run(result.instance);
+            
+            setTimeout(() => {
+                const c = document.getElementById("ebiten-canvas");
+                if (c) c.focus();
+            }, 100);
+        });
+</script>
+</body>
+</html>
